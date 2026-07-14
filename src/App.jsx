@@ -46,7 +46,7 @@ function App() {
   return (
     <AuthProvider>
       <QueryClientProvider client={queryClientInstance}>
-        <Router>
+        <Router basename="/Mon-SG">
           <ScrollToTop />
           <AuthenticatedApp />
         </Router>
