@@ -12,7 +12,7 @@ import Home from './pages/Home';
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
 
-  // Show loading spinner while checking app public settings or auth
+  // Garde tes vérifications de chargement et d'erreurs d'origine ici...
   if (isLoadingPublicSettings || isLoadingAuth) {
     return (
       <div className="fixed inset-0 flex items-center justify-center">
@@ -21,24 +21,26 @@ const AuthenticatedApp = () => {
     );
   }
 
-  // Handle authentication errors
   if (authError) {
     if (authError.type === 'user_not_registered') {
       return <UserNotRegisteredError />;
     } else if (authError.type === 'auth_required') {
-      // Redirect to login automatically
       navigateToLogin();
       return null;
     }
   }
 
-  // Render the main app
   return (
-<Routes>
-  <Route path="/" element={<Home />} />
-  <Route path="/Mon-SG" element={<Home />} />
-  <Route path="*" element={<PageNotFound />} />
-</Routes>
+    <Routes>
+      {/* Ici, on s'assure que peu importe le chemin emprunté par la PWA installée 
+        (la racine, le sous-dossier avec ou sans slash), elle charge bien le composant "Home" 
+        qui contient toute la logique de ton application.
+      */}
+      <Route path="/" element={<Home />} />
+      <Route path="/Mon-SG" element={<Home />} />
+      <Route path="/Mon-SG/" element={<Home />} />
+      <Route path="*" element={<PageNotFound />} />
+    </Routes>
   );
 };
 
